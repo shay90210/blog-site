@@ -18,7 +18,7 @@
 # You can create any custom variable you would like, and they will be accessible
 # in the templates via {{ site.myvariable }}.
 
-title: Your awesome title
+title: Learning Out Loud
 email: shannon.bentley@brewcity-innovations.com
 description: >- # this means to ignore newlines until "baseurl:"
 This blog documents my journey learning software development through hands-on projects, real debugging sessions, and the moments where concepts finally click. Rather than rehashing definitions, I focus on how ideas show up in practice—what I tried, what broke, and what I’m still actively figuring out.
