@@ -1,0 +1,96 @@
+<p>YAML feels deceptively friendly. It’s clean, readable, and at first glance looks like something you could casually edit without much risk. That illusion lasted right up until my Jekyll site refused to run — not because of Ruby, not because of a missing gem, but because of a single formatting mistake inside <code class="language-plaintext highlighter-rouge">_config.yml.</code></p>
+
+<p>This wasn’t my first time seeing YAML, but it was my first time understanding how unforgiving configuration files can be when a project depends on them.</p>
+
+<h3 id="the-setup-a-file-that-looks-harmless">The Setup: A File That Looks Harmless</h3>
+
+<p>When you start a Jekyll blog, <code class="language-plaintext highlighter-rouge">_config.yml</code> feels like a safe place. It’s where you set your site title, description, theme, and plugins. No logic. No loops. No functions. Just key–value pairs.</p>
+
+<p>That sense of safety is misleading.</p>
+
+<p>Unlike HTML or CSS, YAML doesn’t fail gracefully. There’s no partial render, no warning banner. If the file can’t be parsed, Jekyll won’t start at all. Running jekyll serve simply stops everything in its tracks.</p>
+
+<p>That’s exactly what happened to me.</p>
+
+<h3 id="the-error-that-looked-bigger-than-it-was">The Error That Looked Bigger Than It Was</h3>
+
+<p>When I ran <code class="language-plaintext highlighter-rouge">jekyll serve</code>, the terminal exploded with a wall of text. Stack traces. File paths. Ruby internals. It looked serious. But buried in the output was the real clue:</p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">could</span> <span class="ow">not</span> <span class="n">find</span> <span class="n">expected</span> <span class="s1">':'</span> <span class="k">while</span> <span class="n">scanning</span> <span class="n">a</span> <span class="n">simple</span> <span class="n">key</span> <span class="n">at</span> <span class="n">line</span> <span class="mi">24</span> <span class="n">column</span> <span class="mi">1</span></code></pre></figure>
+
+<p>At first, that line didn’t feel helpful. It sounded abstract and overly technical — especially for something as simple as a config file. But this was the moment where I started learning how to read errors instead of reacting to them. The error wasn’t saying YAML was broken. It was saying my file didn’t match what YAML expects.</p>
+
+<h3 id="the-mistake-one-line-one-character">The Mistake: One Line, One Character</h3>
+
+<p>The issue ended up being small enough to miss entirely while scrolling:</p>
+
+<ul>
+  <li>
+    <p>A key without a colon</p>
+  </li>
+  <li>
+    <p>A line of plain text that didn’t belong</p>
+  </li>
+  <li>
+    <p>Or indentation that didn’t match the rest of the file</p>
+  </li>
+</ul>
+
+<p>Any one of those is enough to break YAML parsing.</p>
+
+<p>In my case, I had added content that looked reasonable to a human but made no sense to a parser. YAML doesn’t allow free-floating text. Everything must be part of a defined structure. What surprised me most wasn’t the strictness — it was how confidently I assumed I could just “drop something in” and adjust it later.</p>
+
+<p>YAML doesn’t work that way.</p>
+
+<h3 id="what-this-taught-me-about-configuration-files">What This Taught Me About Configuration Files</h3>
+
+<p>This experience changed how I think about configuration entirely. Config files aren’t documentation. They’re not notes. They’re instructions. And they need to be precise. Unlike application code, configuration errors don’t usually point to logic problems — they point to structure problems. Spacing. Colons. Dashes. Nesting.</p>
+
+<p>It also made something else click: tools like Jekyll are only as flexible as their configuration allows. _config.yml isn’t optional glue — it’s a contract between you and the tool. If you violate that contract, nothing runs.</p>
+
+<h3 id="why-this-was-a-useful-beginner-mistake">Why This Was a Useful Beginner Mistake</h3>
+
+<p>It would be easy to dismiss this as a trivial error. But I don’t think it is.</p>
+
+<p>This was my first real exposure to how fragile systems can be when everything depends on a single source of truth. One missing character didn’t just affect a feature — it shut down the entire development environment. That’s a powerful lesson early on.</p>
+
+<p>It taught me to:</p>
+
+<ul>
+  <li>
+    <p>Slow down when editing configuration</p>
+  </li>
+  <li>
+    <p>Respect formatting rules even when they feel unnecessary</p>
+  </li>
+  <li>
+    <p>Trust error messages more than my initial assumptions</p>
+  </li>
+  <li>
+    <p>Most importantly, it reminded me that being a beginner doesn’t mean avoiding complexity — it means learning how to approach it calmly.</p>
+  </li>
+</ul>
+
+<h3 id="what-ill-do-differently-next-time">What I’ll Do Differently Next Time</h3>
+
+<p>Going forward, I’m more intentional when working in files like <code class="language-plaintext highlighter-rouge">_config.yml</code>:</p>
+
+<ul>
+  <li>
+    <p>I make smaller changes and test more often</p>
+  </li>
+  <li>
+    <p>I pay attention to indentation and nesting</p>
+  </li>
+  <li>
+    <p>I treat config edits with the same care as application code</p>
+  </li>
+</ul>
+
+<p>This won’t be the last time a config file trips me up — but it won’t catch me off guard the same way again.</p>
+
+<h3 id="still-learning">Still Learning</h3>
+
+<p>YAML is simple until it isn’t. And that line between the two is thinner than I expected. If there’s a takeaway here, it’s this: sometimes the most valuable lessons don’t come from building features — they come from figuring out why nothing works at all.</p>
+
+<p>If you’ve had your own moment like this, I’d love to hear about it. Debugging might be solitary work, but learning doesn’t have to be.</p>
